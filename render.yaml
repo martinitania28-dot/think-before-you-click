@@ -1,0 +1,10 @@
+services:
+  - type: web
+    name: think-before-you-click
+    runtime: python
+    buildCommand: echo ok
+    startCommand: python3 server.py
+    plan: free
+    envVars:
+      - key: PORT
+        value: 10000

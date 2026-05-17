@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Think Before You Click</title>
+<style>
+/* ── Reset ─────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:      #f0f4f8;
+  --card:    #ffffff;
+  --text:    #1a202c;
+  --muted:   #718096;
+  --radius:  16px;
+  --shadow:  0 4px 24px rgba(0,0,0,.10);
+  --gold:    #f6c90e;
+  --silver:  #b0b0b0;
+  --bronze:  #cd7f32;
+}
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── Nav ──────────────────────────────────────────────────── */
+nav {
+  background: #1a202c;
+  color: #fff;
+  padding: 14px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky; top: 0; z-index: 100;
+  box-shadow: 0 2px 12px rgba(0,0,0,.3);
+}
+nav .brand { font-weight: 700; font-size: 1.05rem; }
+nav .nav-links { display: flex; gap: 12px; }
+nav button {
+  background: rgba(255,255,255,.12); color: #fff;
+  border: none; border-radius: 8px;
+  padding: 7px 16px; cursor: pointer; font-size: .9rem;
+  transition: background .2s;
+}
+nav button:hover      { background: rgba(255,255,255,.25); }
+nav button.active-nav { background: #4299e1; }
+
+/* ── Sections ─────────────────────────────────────────────── */
+.section { display: none; padding: 24px 16px 56px; max-width: 680px; margin: 0 auto; }
+.section.active { display: block; }
+
+/* ── Welcome ──────────────────────────────────────────────── */
+.welcome-card {
+  background: var(--card); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 36px 32px;
+  text-align: center; margin-top: 32px;
+}
+.logos-row {
+  display: flex; align-items: center; justify-content: center;
+  gap: 24px; margin-bottom: 28px; flex-wrap: wrap;
+}
+.logos-row img {
+  height: 72px; max-width: 140px;
+  object-fit: contain; filter: drop-shadow(0 2px 6px rgba(0,0,0,.12));
+}
+.logo-placeholder {
+  height: 72px; width: 100px;
+  display: flex; align-items: center; justify-content: center;
+  border: 2px dashed #cbd5e0; border-radius: 10px;
+  color: var(--muted); font-size: .75rem;
+}
+.logo-divider {
+  width: 1px; height: 48px; background: #e2e8f0;
+}
+.welcome-card h1 { font-size: 1.75rem; margin-bottom: 8px; line-height: 1.25; }
+.welcome-card .tagline { color: var(--muted); margin-bottom: 28px; font-size: 1rem; }
+.field {
+  width: 100%; padding: 14px 18px;
+  border: 2px solid #e2e8f0; border-radius: 10px;
+  font-size: 1.05rem; outline: none;
+  transition: border-color .2s; margin-bottom: 14px;
+}
+.field:focus { border-color: #4299e1; }
+.btn-primary {
+  width: 100%; padding: 14px;
+  background: #4299e1; color: #fff;
+  border: none; border-radius: 10px;
+  font-size: 1.05rem; font-weight: 700;
+  cursor: pointer; transition: background .2s, transform .1s;
+}
+.btn-primary:hover  { background: #3182ce; }
+.btn-primary:active { transform: scale(.98); }
+.error-msg { color: #e53e3e; font-size: .88rem; margin-top: 6px; min-height: 20px; }
+
+/* ── Progress bar ─────────────────────────────────────────── */
+.progress-wrap {
+  margin-bottom: 20px;
+  display: flex; align-items: center; gap: 12px;
+}
+.progress-track {
+  flex: 1; height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden;
+}
+.progress-fill {
+  height: 100%; background: #4299e1; border-radius: 4px;
+  transition: width .4s ease;
+}
+.progress-label { font-size: .85rem; color: var(--muted); white-space: nowrap; }
+
+/* ── Quiz card ────────────────────────────────────────────── */
+.quiz-card {
+  background: var(--card); border-radius: var(--radius);
+  box-shadow: var(--shadow); overflow: hidden;
+  animation: fadeIn .3s ease;
+}
+@keyframes fadeIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:none; } }
+
+.quiz-img-wrap {
+  width: 100%; max-height: 420px; overflow: hidden;
+  background: #1a202c; display: flex; align-items: center; justify-content: center;
+}
+.quiz-img-wrap img {
+  width: 100%; max-height: 420px; object-fit: contain; display: block;
+}
+.quiz-img-placeholder {
+  width: 100%; height: 220px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 5rem; background: #edf2f7;
+}
+
+.quiz-body { padding: 20px 24px 24px; }
+.opera-name {
+  font-size: 1.25rem; font-weight: 700; margin-bottom: 4px;
+}
+.opera-author {
+  font-size: .88rem; color: var(--muted); margin-bottom: 20px;
+}
+.quiz-question {
+  font-size: .9rem; font-weight: 600; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .5px; margin-bottom: 12px;
+}
+
+/* ── Category buttons ─────────────────────────────────────── */
+.cat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+@media (max-width: 420px) { .cat-grid { grid-template-columns: 1fr; } }
+
+.cat-btn {
+  display: flex; align-items: center; gap: 10px;
+  padding: 13px 16px;
+  border: 2px solid #e2e8f0; border-radius: 12px;
+  background: #fff; cursor: pointer;
+  font-size: .95rem; font-weight: 600;
+  transition: all .2s; text-align: left;
+}
+.cat-btn:hover { transform: translateY(-2px); box-shadow: var(--shadow); }
+.cat-btn .cat-icon { font-size: 1.4rem; }
+
+/* feedback states */
+.cat-btn.correct {
+  background: #f0fff4; border-color: #38a169; color: #276749;
+}
+.cat-btn.wrong {
+  background: #fff5f5; border-color: #e53e3e; color: #c53030;
+}
+.cat-btn.show-correct {
+  background: #f0fff4; border-color: #38a169; color: #276749;
+}
+.cat-btn:disabled { cursor: default; transform: none; }
+
+/* ── Feedback banner ──────────────────────────────────────── */
+.feedback-banner {
+  margin-top: 16px; padding: 12px 16px;
+  border-radius: 10px; font-weight: 600; font-size: .95rem;
+  display: none;
+}
+.feedback-banner.correct { background: #f0fff4; color: #276749; display: block; }
+.feedback-banner.wrong   { background: #fff5f5; color: #c53030; display: block; }
+
+.btn-next {
+  width: 100%; margin-top: 16px;
+  padding: 13px; background: #4299e1; color: #fff;
+  border: none; border-radius: 10px;
+  font-size: 1rem; font-weight: 700;
+  cursor: pointer; display: none;
+  transition: background .2s;
+}
+.btn-next:hover { background: #3182ce; }
+.btn-next.show  { display: block; }
+
+/* ── Timer ────────────────────────────────────────────────── */
+.timer-row {
+  display: flex; justify-content: flex-end; align-items: center;
+  gap: 6px; margin-bottom: 12px; color: var(--muted); font-size: .9rem;
+}
+#timer { font-weight: 700; color: #2d3748; font-variant-numeric: tabular-nums; }
+
+/* ── Results ──────────────────────────────────────────────── */
+.result-hero {
+  text-align: center; background: var(--card);
+  border-radius: var(--radius); box-shadow: var(--shadow);
+  padding: 40px 24px; margin-bottom: 24px;
+}
+.score-circle {
+  width: 120px; height: 120px; border-radius: 50%;
+  background: linear-gradient(135deg, #4299e1, #2b6cb0);
+  display: inline-flex; align-items: center; justify-content: center;
+  flex-direction: column; color: #fff; margin-bottom: 16px;
+  box-shadow: 0 6px 20px rgba(66,153,225,.35);
+}
+.score-circle .sn { font-size: 2.4rem; font-weight: 800; line-height: 1; }
+.score-circle .sd { font-size: 1rem; opacity: .8; }
+.result-hero h2 { font-size: 1.5rem; margin-bottom: 6px; }
+.result-hero p  { color: var(--muted); }
+
+/* ── Leaderboards ─────────────────────────────────────────── */
+.lb-card {
+  background: var(--card); border-radius: var(--radius);
+  box-shadow: var(--shadow); overflow: hidden; margin-bottom: 20px;
+}
+.lb-card h3 {
+  padding: 16px 20px; font-size: 1rem;
+  border-bottom: 1px solid #e2e8f0; background: #f7fafc;
+}
+.lb-table { width: 100%; border-collapse: collapse; font-size: .88rem; }
+.lb-table th {
+  text-align: left; padding: 10px 16px;
+  font-size: .75rem; text-transform: uppercase;
+  letter-spacing: .5px; color: var(--muted);
+  border-bottom: 1px solid #e2e8f0;
+}
+.lb-table td { padding: 10px 16px; border-bottom: 1px solid #f0f4f8; vertical-align: middle; }
+.lb-table tr:last-child td { border-bottom: none; }
+.lb-table tr:hover td { background: #f7fafc; }
+.rank   { font-weight: 700; min-width: 28px; display: inline-block; }
+.rank-1 { color: var(--gold); }
+.rank-2 { color: var(--silver); }
+.rank-3 { color: var(--bronze); }
+.nick   { font-weight: 600; }
+.pill   {
+  display: inline-block; background: #ebf8ff; color: #2b6cb0;
+  border-radius: 20px; padding: 2px 10px;
+  font-weight: 700; font-size: .85rem;
+}
+.acc-wrap   { display: flex; align-items: center; gap: 8px; }
+.acc-bar    { height: 8px; border-radius: 4px; background: #48bb78; min-width: 4px; }
+.acc-pct    { font-size: .8rem; color: var(--muted); min-width: 38px; }
+.opera-thumb { width: 40px; height: 40px; object-fit: cover; border-radius: 6px; }
+.opera-name-lb { font-size: .85rem; }
+.lb-empty   { text-align: center; padding: 32px; color: var(--muted); }
+
+/* ── Toast ────────────────────────────────────────────────── */
+#toast {
+  position: fixed; bottom: 24px; left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: #2d3748; color: #fff;
+  padding: 12px 24px; border-radius: 10px;
+  font-size: .95rem; z-index: 999;
+  transition: transform .35s cubic-bezier(.34,1.56,.64,1);
+  pointer-events: none; white-space: nowrap;
+}
+#toast.show { transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="brand">🎨 Think Before You Click</span>
+  <div class="nav-links">
+    <button id="nav-play" class="active-nav" onclick="showSection('welcome')">Play</button>
+    <button id="nav-lb"   onclick="showSection('lb')">Leaderboards</button>
+  </div>
+</nav>
+
+<div id="toast"></div>
+
+<!-- ══ WELCOME ═══════════════════════════════════════════════ -->
+<div id="section-welcome" class="section active">
+  <div class="welcome-card">
+
+    <!-- Logos row -->
+    <div class="logos-row" id="logos-row">
+      <img src="/logo-scuola1.png" alt="School 1"
+           onerror="this.replaceWith(makePlaceholder('School 1'))">
+      <div class="logo-divider"></div>
+      <img src="/logo-etwinning.png" alt="eTwinning"
+           onerror="this.replaceWith(makePlaceholder('eTwinning'))">
+      <div class="logo-divider"></div>
+      <img src="/logo-scuola2.png" alt="School 2"
+           onerror="this.replaceWith(makePlaceholder('School 2'))">
+    </div>
+
+    <h1 id="wc-title">Think Before You Click – Art for a Safer Internet</h1>
+    <p class="tagline" id="wc-sub">Look at each artwork and guess the category</p>
+
+    <input id="nick-input" class="field" type="text" maxlength="30"
+           placeholder="Your nickname (min 2 characters)"
+           onkeydown="if(event.key==='Enter') startGame()" />
+    <button class="btn-primary" onclick="startGame()">Start →</button>
+    <div class="error-msg" id="nick-error"></div>
+  </div>
+</div>
+
+<!-- ══ GAME ═══════════════════════════════════════════════════ -->
+<div id="section-game" class="section">
+
+  <div class="timer-row">⏱ <span id="timer">00:00</span></div>
+
+  <div class="progress-wrap">
+    <div class="progress-track"><div class="progress-fill" id="prog-fill" style="width:0%"></div></div>
+    <span class="progress-label" id="prog-label">0 / 0</span>
+  </div>
+
+  <div class="quiz-card" id="quiz-card">
+    <!-- populated by JS -->
+  </div>
+
+</div>
+
+<!-- ══ RESULTS ════════════════════════════════════════════════ -->
+<div id="section-results" class="section">
+  <div class="result-hero">
+    <div class="score-circle">
+      <span class="sn" id="res-score">0</span>
+      <span class="sd" id="res-den">/ 0</span>
+    </div>
+    <h2 id="res-title"></h2>
+    <p  id="res-sub"></p>
+  </div>
+
+  <div class="lb-card">
+    <h3>🏆 Player Leaderboard</h3>
+    <div id="lb-players-r"></div>
+  </div>
+  <div class="lb-card">
+    <h3>🖼️ Artwork Leaderboard</h3>
+    <div id="lb-items-r"></div>
+  </div>
+
+  <div style="text-align:center;margin-top:24px">
+    <button class="btn-primary" style="max-width:260px" onclick="showSection('welcome')">Play again</button>
+  </div>
+</div>
+
+<!-- ══ LEADERBOARD ════════════════════════════════════════════ -->
+<div id="section-lb" class="section">
+  <h2 style="margin-bottom:20px">Public Leaderboards</h2>
+  <div class="lb-card">
+    <h3>🏆 Player Leaderboard</h3>
+    <div id="lb-players-s"></div>
+  </div>
+  <div class="lb-card">
+    <h3>🖼️ Artwork Leaderboard</h3>
+    <div id="lb-items-s"></div>
+  </div>
+</div>
+
+<script>
+/* ── State ─────────────────────────────────────────────────── */
+let CONFIG      = null;
+let playerId    = null;
+let queue       = [];   // shuffled items
+let current     = 0;
+let results     = [];
+let timerInt    = null;
+let elapsed     = 0;
+let answered    = false;
+
+/* ── Boot ──────────────────────────────────────────────────── */
+addEventListener('DOMContentLoaded', async () => {
+  CONFIG = await fetch('/api/config').then(r => r.json());
+  document.getElementById('wc-title').textContent = CONFIG.title;
+  document.getElementById('wc-sub').textContent   = CONFIG.subtitle;
+});
+
+/* ── Nav ───────────────────────────────────────────────────── */
+function showSection(name) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('section-' + name).classList.add('active');
+  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active-nav'));
+  document.getElementById(name === 'lb' ? 'nav-lb' : 'nav-play').classList.add('active-nav');
+  if (name === 'lb') loadLb('s');
+}
+
+/* ── Toast ─────────────────────────────────────────────────── */
+function toast(msg, ms = 2200) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(t._t);
+  t._t = setTimeout(() => t.classList.remove('show'), ms);
+}
+
+/* ── Timer ─────────────────────────────────────────────────── */
+function startTimer() {
+  elapsed = 0; clearInterval(timerInt);
+  timerInt = setInterval(() => {
+    elapsed++;
+    const m = String(Math.floor(elapsed/60)).padStart(2,'0');
+    const s = String(elapsed%60).padStart(2,'0');
+    document.getElementById('timer').textContent = m+':'+s;
+  }, 1000);
+}
+
+/* ── Start ─────────────────────────────────────────────────── */
+async function startGame() {
+  const nick = document.getElementById('nick-input').value.trim();
+  const err  = document.getElementById('nick-error');
+  err.textContent = '';
+  if (nick.length < 2) { err.textContent = 'At least 2 characters required.'; return; }
+
+  const res  = await fetch('/api/register', {
+    method: 'POST', headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ nickname: nick }),
+  });
+  const data = await res.json();
+  if (!res.ok) { err.textContent = data.error; return; }
+
+  playerId = data.playerId;
+  queue    = [...CONFIG.items].sort(() => Math.random() - .5);
+  current  = 0;
+  results  = [];
+  answered = false;
+
+  showSection('game');
+  startTimer();
+  renderCard();
+}
+
+/* ── Render current card ───────────────────────────────────── */
+function renderCard() {
+  const item  = queue[current];
+  const total = queue.length;
+
+  // Progress
+  const pct = Math.round(current / total * 100);
+  document.getElementById('prog-fill').style.width  = pct + '%';
+  document.getElementById('prog-label').textContent = current + ' / ' + total;
+
+  // Card HTML
+  const imgHtml = item.image
+    ? `<div class="quiz-img-wrap"><img src="${item.image}" alt="${escHtml(item.name)}"></div>`
+    : `<div class="quiz-img-placeholder">🖼️</div>`;
+
+  const authorLine = item.author
+    ? `<div class="opera-author">by ${escHtml(item.author)}</div>`
+    : `<div class="opera-author" style="min-height:20px"></div>`;
+
+  const catBtns = CONFIG.categories.map(cat => `
+    <button class="cat-btn" data-id="${cat.id}"
+            onclick="answer('${cat.id}')"
+            style="border-color:${cat.color}20">
+      <span class="cat-icon">${cat.icon}</span>
+      <span>${escHtml(cat.label)}</span>
+    </button>
+  `).join('');
+
+  document.getElementById('quiz-card').innerHTML = `
+    ${imgHtml}
+    <div class="quiz-body">
+      <div class="opera-name">${escHtml(item.name || 'Artwork ' + (current+1))}</div>
+      ${authorLine}
+      <div class="quiz-question">Which category does this artwork belong to?</div>
+      <div class="cat-grid">${catBtns}</div>
+      <div class="feedback-banner" id="feedback"></div>
+      <button class="btn-next" id="btn-next" onclick="nextCard()">
+        ${current + 1 < total ? 'Next artwork →' : 'See results →'}
+      </button>
+    </div>
+  `;
+  answered = false;
+}
+
+/* ── Answer ────────────────────────────────────────────────── */
+function answer(catId) {
+  if (answered) return;
+  answered = true;
+
+  const item    = queue[current];
+  const correct = catId === item.correct;
+  results.push({ itemId: item.id, chosen: catId });
+
+  // Style buttons
+  document.querySelectorAll('.cat-btn').forEach(btn => {
+    btn.disabled = true;
+    if (btn.dataset.id === catId && correct)       btn.classList.add('correct');
+    if (btn.dataset.id === catId && !correct)      btn.classList.add('wrong');
+    if (btn.dataset.id === item.correct && !correct) btn.classList.add('show-correct');
+  });
+
+  // Feedback
+  const fb = document.getElementById('feedback');
+  if (correct) {
+    fb.textContent = '✅ Correct!';
+    fb.className   = 'feedback-banner correct';
+  } else {
+    const rightCat = CONFIG.categories.find(c => c.id === item.correct);
+    fb.textContent = `❌ It was: ${rightCat.icon} ${rightCat.label}`;
+    fb.className   = 'feedback-banner wrong';
+  }
+
+  document.getElementById('btn-next').classList.add('show');
+}
+
+/* ── Next card ─────────────────────────────────────────────── */
+function nextCard() {
+  current++;
+  if (current < queue.length) {
+    renderCard();
+  } else {
+    submitGame();
+  }
+}
+
+/* ── Submit ────────────────────────────────────────────────── */
+async function submitGame() {
+  clearInterval(timerInt);
+  const res  = await fetch('/api/submit', {
+    method: 'POST', headers: {'Content-Type':'application/json'},
+    body: JSON.stringify({ playerId, results, durationSeconds: elapsed }),
+  });
+  const data = await res.json();
+  if (!res.ok) { toast('Error: ' + data.error); return; }
+  showResults(data.score, data.total);
+}
+
+/* ── Results ───────────────────────────────────────────────── */
+async function showResults(score, total) {
+  document.getElementById('res-score').textContent = score;
+  document.getElementById('res-den').textContent   = '/ ' + total;
+  const pct = Math.round(score / total * 100);
+  const msgs = ['Keep trying! 💪', 'Almost! 🤔', 'Good job! 👍', 'Great! 🌟', 'Perfect! 🎉'];
+  document.getElementById('res-title').textContent = msgs[Math.min(Math.floor(pct/21), 4)];
+  document.getElementById('res-sub').textContent   =
+    `You matched ${score} out of ${total} artworks correctly (${pct}%)`;
+
+  // Update progress bar to 100%
+  document.getElementById('prog-fill').style.width  = '100%';
+  document.getElementById('prog-label').textContent = total + ' / ' + total;
+
+  showSection('results');
+  await loadLb('r');
+}
+
+/* ── Leaderboard ───────────────────────────────────────────── */
+async function loadLb(suffix) {
+  const data = await fetch('/api/leaderboard').then(r => r.json());
+  renderPlayersLb(data.players, 'lb-players-' + suffix);
+  renderItemsLb(data.items,    'lb-items-'   + suffix);
+}
+
+function renderPlayersLb(players, id) {
+  const el = document.getElementById(id);
+  if (!players.length) { el.innerHTML = '<div class="lb-empty">No players yet.</div>'; return; }
+  const rows = players.map((p, i) => {
+    const r = i + 1;
+    const medal = r===1?'🥇':r===2?'🥈':r===3?'🥉':r;
+    const cls   = r<=3 ? `rank-${r}` : '';
+    const time  = p.best_time_s != null
+      ? `${String(Math.floor(p.best_time_s/60)).padStart(2,'0')}:${String(p.best_time_s%60).padStart(2,'0')}`
+      : '—';
+    return `<tr>
+      <td><span class="rank ${cls}">${medal}</span></td>
+      <td class="nick">${escHtml(p.nickname)}</td>
+      <td><span class="pill">${p.best_score}/${p.total}</span></td>
+      <td style="color:var(--muted);font-size:.82rem">⏱ ${time}</td>
+    </tr>`;
+  }).join('');
+  el.innerHTML = `<table class="lb-table">
+    <thead><tr><th>#</th><th>Nickname</th><th>Score</th><th>Time</th></tr></thead>
+    <tbody>${rows}</tbody></table>`;
+}
+
+function renderItemsLb(items, id) {
+  const el = document.getElementById(id);
+  if (!items.length) { el.innerHTML = '<div class="lb-empty">No data yet.</div>'; return; }
+
+  // Build name map from config
+  const nameMap = {};
+  if (CONFIG) CONFIG.items.forEach(i => { nameMap[i.id] = { name: i.name, author: i.author, image: i.image }; });
+
+  const rows = items.map((it, i) => {
+    const r    = i + 1;
+    const info = nameMap[it.item_id] || {};
+    const barW = Math.max(4, it.pct);
+    const thumb = info.image
+      ? `<img class="opera-thumb" src="${info.image}" alt="">`
+      : '🖼️';
+    const name  = info.name || it.item_id;
+    const author = info.author ? `<br><span style="color:var(--muted);font-size:.75rem">by ${escHtml(info.author)}</span>` : '';
+    return `<tr>
+      <td><span class="rank">${r}</span></td>
+      <td>${thumb}</td>
+      <td><span class="opera-name-lb">${escHtml(name)}${author}</span></td>
+      <td>
+        <div class="acc-wrap">
+          <div class="acc-bar" style="width:${barW}px"></div>
+          <span class="acc-pct">${it.pct}%</span>
+        </div>
+        <span style="font-size:.75rem;color:var(--muted)">${it.corretti}/${it.tentativi}</span>
+      </td>
+    </tr>`;
+  }).join('');
+  el.innerHTML = `<table class="lb-table">
+    <thead><tr><th>#</th><th></th><th>Artwork</th><th>Correct</th></tr></thead>
+    <tbody>${rows}</tbody></table>`;
+}
+
+function escHtml(s) {
+  return String(s||'')
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+}
+
+function makePlaceholder(label) {
+  const div = document.createElement('div');
+  div.className = 'logo-placeholder';
+  div.textContent = label;
+  return div;
+}
+</script>
+</body>
+</html>
