@@ -55,7 +55,7 @@ CONFIG = {
         {
             "id":      "opera-01",
             "name":    "Look at me, I'm real",
-            "author":  "Olducci Chiara, Palombi Arianna",
+            "author":  "Chiara, Arianna",
             "image":   "/opera-01.jpeg",
             "text":    "Look at me, I'm real",
             "correct": "rispetto",
@@ -63,7 +63,7 @@ CONFIG = {
         {
             "id":      "opera-02",
             "name":    "The Threads of Addiction",
-            "author":  "Gill Mehreet Kaur, Cristiana Sperduti",
+            "author":  "Gill, Cristiana",
             "image":   "/opera-02.jpeg",
             "text":    "The Threads of Addiction",
             "correct": "dipendenza",
@@ -71,7 +71,7 @@ CONFIG = {
         {
             "id":      "opera-03",
             "name":    "Words Can Hurt",
-            "author":  "Gill Mehreet Kaur, Cristiana Sperduti, Alice Zomparelli, Serena D'Ambrogio",
+            "author":  "Gill, Cristiana, Alice, Serena",
             "image":   "/opera-03.jpg",
             "text":    "Words Can Hurt",
             "correct": "cyberbullismo",
@@ -79,7 +79,7 @@ CONFIG = {
         {
             "id":      "opera-04",
             "name":    "Chaos on the Internet",
-            "author":  "Panici Francesco, Bejan Bedjeti",
+            "author":  "Francesco, Bejan",
             "image":   "/opera-04.jpeg",
             "text":    "Chaos on the Internet",
             "correct": "fake-news",
@@ -87,7 +87,7 @@ CONFIG = {
         {
             "id":      "opera-05",
             "name":    "Think Before You Click",
-            "author":  "Iacovacci Sofia, Bianchi Simone",
+            "author":  "Sofia, Simone",
             "image":   "/opera-05.jpeg",
             "text":    "Think Before You Click",
             "correct": "privacy",
@@ -95,7 +95,7 @@ CONFIG = {
         {
             "id":      "opera-06",
             "name":    "The Sea That Does Not Give Back",
-            "author":  "Giuseppe Mantua, Alessandro Panella",
+            "author":  "Giuseppe, Alessandro",
             "image":   "/opera-06.jpeg",
             "text":    "The Sea That Does Not Give Back",
             "correct": "privacy",
@@ -103,7 +103,7 @@ CONFIG = {
         {
             "id":      "opera-07",
             "name":    "Words that Weigh Heavily",
-            "author":  "Erman Tafa, Mantua Giuseppe, Panella Alessandro",
+            "author":  "Erman, Giuseppe, Alessandro",
             "image":   "/opera-07.jpeg",
             "text":    "Words that Weigh Heavily",
             "correct": "cyberbullismo",
@@ -111,7 +111,7 @@ CONFIG = {
         {
             "id":      "opera-08",
             "name":    "Think Before You Click (II)",
-            "author":  "Iacovacci Sofia, Bianchi Simone",
+            "author":  "Sofia, Simone",
             "image":   "/opera-08.jpeg",
             "text":    "Think Before You Click (II)",
             "correct": "privacy",
