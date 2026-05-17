@@ -348,7 +348,14 @@ nav button.active-nav { background: #4299e1; }
 
 <!-- ══ LEADERBOARD ════════════════════════════════════════════ -->
 <div id="section-lb" class="section">
-  <h2 style="margin-bottom:20px">Public Leaderboards</h2>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px">
+  <h2>Public Leaderboards</h2>
+  <a href="/api/export" download="risultati.csv"
+     style="padding:10px 20px;background:#38a169;color:#fff;border-radius:10px;
+            font-weight:700;font-size:.9rem;text-decoration:none;white-space:nowrap">
+    &#11015; Export CSV
+  </a>
+</div>
   <div class="lb-card">
     <h3>🏆 Player Leaderboard</h3>
     <div id="lb-players-s"></div>
