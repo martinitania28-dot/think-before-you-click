@@ -16,7 +16,7 @@ from pathlib import Path
 from importlib.util import spec_from_file_location, module_from_spec
 
 BASE_DIR = Path(__file__).parent
-PUBLIC   = BASE_DIR / 'public'
+PUBLIC   = BASE_DIR          # tutti i file statici nella cartella root
 DB_PATH  = BASE_DIR / 'leaderboard.db'
 PORT     = int(os.environ.get('PORT', 3000))
 
