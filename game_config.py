@@ -116,5 +116,13 @@ CONFIG = {
             "text":    "Think Before You Click (II)",
             "correct": "privacy",
         },
+        {
+            "id":      "opera-09",
+            "name":    "The words that guide you",
+            "author":  "Marco, Nocolò",
+            "image":   "/IMG_3018.jpeg",
+            "text":    "The words that guide you",
+            "correct": "cyberbullismo",
+        },
     ],
 }
