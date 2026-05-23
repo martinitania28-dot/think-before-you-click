@@ -202,7 +202,7 @@ CONFIG = {
             "author":  "",
             "image":   "/1000102754.jpg",
             "text":    "",
-            "correct": "",
+            "correct": "rispetto",
         },
          {
             "id":      "1000102756",
@@ -210,7 +210,7 @@ CONFIG = {
             "author":  "",
             "image":   "/1000102756.jpg",
             "text":    "",
-            "correct": "",
+            "correct": "rispetto",
         },
          {
             "id":      "1000103387",
@@ -218,7 +218,7 @@ CONFIG = {
             "author":  "",
             "image":   "/1000103387.jpg",
             "text":    "",
-            "correct": "",
+            "correct": "rispetto",
         },
          {
             "id":      "1000103388",
@@ -226,7 +226,7 @@ CONFIG = {
             "author":  "",
             "image":   "/1000103388.jpg",
             "text":    "",
-            "correct": "",
+            "correct": "rispetto",
         },
          {
             "id":      "1000103389",
@@ -234,7 +234,7 @@ CONFIG = {
             "author":  "",
             "image":   "/1000103389.jpg",
             "text":    "",
-            "correct": "",
+            "correct": "rispetto",
         },
          {
             "id":      "1000103390",
@@ -242,7 +242,7 @@ CONFIG = {
             "author":  "",
             "image":   "/1000103390.jpg",
             "text":    "",
-            "correct": "",
+            "correct": "rispetto",
         },
          {
             "id":      "1000103391",
@@ -250,7 +250,7 @@ CONFIG = {
             "author":  "",
             "image":   "/1000103391.jpg",
             "text":    "",
-            "correct": "",
+            "correct": "rispetto",
         },
          {
             "id":      "1000103392",
@@ -258,7 +258,7 @@ CONFIG = {
             "author":  "",
             "image":   "/1000103392.jpg",
             "text":    "",
-            "correct": "",
+            "correct": "rispetto",
         },
          {
             "id":      "1000103393",
@@ -266,7 +266,7 @@ CONFIG = {
             "author":  "",
             "image":   "/1000103393.jpg",
             "text":    "",
-            "correct": "",
+            "correct": "rispetto",
         },
          {
             "id":      "1000103394",
@@ -274,7 +274,7 @@ CONFIG = {
             "author":  "",
             "image":   "/1000103394.jpg",
             "text":    "",
-            "correct": "",
+            "correct": "rispetto",
         },
          {
             "id":      "1000103395",
@@ -282,7 +282,7 @@ CONFIG = {
             "author":  "",
             "image":   "/1000103395.jpg",
             "text":    "",
-            "correct": "",
+            "correct": "rispetto",
         },
          {
             "id":      "1000103396",
@@ -290,7 +290,7 @@ CONFIG = {
             "author":  "",
             "image":   "/1000103396.jpg",
             "text":    "",
-            "correct": "",
+            "correct": "rispetto",
         },
          {
             "id":      "1000103397",
@@ -298,7 +298,7 @@ CONFIG = {
             "author":  "",
             "image":   "/1000103397.jpg",
             "text":    "",
-            "correct": "",
+            "correct": "rispetto",
         },
          {
             "id":      "1000103398",
@@ -306,7 +306,7 @@ CONFIG = {
             "author":  "",
             "image":   "/1000103398.jpg",
             "text":    "",
-            "correct": "",
+            "correct": "rispetto",
         },
     ],
 }
