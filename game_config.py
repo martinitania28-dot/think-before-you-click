@@ -184,7 +184,7 @@ CONFIG = {
             "id":      "3073",
             "name":    "Block hate",
             "author":  "Emma, Valentina, Paola",
-            "image":   "/IMG_3073.jpeg",
+            "image":   "/IMG_3073_2.jpeg",
             "text":    "Block hate",
             "correct": "cyberbullismo",
         },
